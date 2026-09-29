@@ -1,0 +1,123 @@
+.strengths__title {
+  margin-top: 26px;
+}
+
+/* 用 1px 描边拼出网格，比带阴影的卡片更克制 */
+
+.strengths__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: clamp(28px, 2.6vw, 48px);
+  background: var(--bg);
+  transition: background-color 0.6s var(--ease);
+}
+
+.card:hover {
+  background: var(--panel);
+}
+
+.card__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), rgba(99, 230, 208, 0.35), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s var(--ease);
+}
+
+.card:hover .card__line {
+  transform: scaleX(1);
+}
+
+.card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--text-2);
+  transition: color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+
+.card:hover .card__icon {
+  color: var(--accent);
+  border-color: var(--accent-soft);
+}
+
+.card__index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--text-3);
+}
+
+.card__title {
+  margin-top: 10px;
+  font-size: clamp(18px, 1.35vw, 22px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.card__text {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text-2);
+}
+
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.card__tags li {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.card__tags li + li::before {
+  content: '/ ';
+  color: var(--line-3);
+}
+
+@media (max-width: 1024px) {
+  .strengths__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .strengths__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

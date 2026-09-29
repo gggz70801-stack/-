@@ -1,0 +1,337 @@
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: 140px 44px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ---------------- 背景层 ---------------- */
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+  filter: saturate(0.85) contrast(1.05);
+}
+
+.hero__video.is-active {
+  opacity: 0.5;
+}
+
+/* 动态光影：没有视频文件时的兜底，同时也是有视频时的氛围叠层 */
+.hero__aurora {
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(closest-side at 26% 34%, rgba(110, 140, 255, 0.34), transparent 72%),
+    radial-gradient(closest-side at 80% 52%, rgba(99, 230, 208, 0.22), transparent 70%),
+    radial-gradient(closest-side at 60% 92%, rgba(150, 120, 255, 0.22), transparent 72%);
+  filter: blur(60px);
+  animation: auroraDrift 28s var(--ease) infinite alternate;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 132px 132px;
+  mask-image: radial-gradient(120% 90% at 50% 30%, #000 12%, transparent 78%);
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 30%, #000 12%, transparent 78%);
+  opacity: 0.62;
+}
+
+/* 缓慢下移的扫描带，很淡，只做气氛 */
+.hero__band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 38%;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  animation: bandScan 16s linear infinite;
+  opacity: 0.7;
+}
+
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(118% 92% at 44% 22%, transparent 26%, rgba(0, 0, 0, 0.5) 84%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.7) 0%, transparent 28%, rgba(8, 9, 11, 0.5) 74%, var(--bg) 100%);
+}
+
+/* ---------------- 内容 ---------------- */
+
+.hero__inner {
+  position: relative;
+  width: 100%;
+}
+
+.hero__main {
+  max-width: 1180px;
+}
+
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.hero__eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.hero__title {
+  margin-top: clamp(24px, 3vw, 40px);
+  font-size: clamp(42px, 6.5vw, 112px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--text);
+}
+
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.hero__line > span {
+  display: block;
+  transform: translateY(110%);
+  animation: riseIn 1.25s var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* 逐行极淡的明度递进，让整块标题有纵深而不是死白 */
+.hero__line:nth-child(1) > span {
+  color: #f7f8fa;
+}
+
+.hero__line:nth-child(2) > span {
+  color: rgba(247, 248, 250, 0.9);
+}
+
+.hero__line:nth-child(3) > span {
+  color: rgba(247, 248, 250, 0.78);
+}
+
+.hero__note {
+  max-width: 620px;
+  margin-top: clamp(24px, 2.6vw, 40px);
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.85;
+  color: var(--text-2);
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 36px);
+  margin-top: clamp(32px, 3.4vw, 52px);
+}
+
+.hero__cta-ghost {
+  color: var(--text-2);
+}
+
+.hero__cta-ghost:hover {
+  color: var(--text);
+}
+
+/* ---------------- 底部信息条 ---------------- */
+
+.hero__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: clamp(52px, 6vw, 96px);
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(28px, 5vw, 88px);
+}
+
+.hero__meta li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero__meta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.hero__meta-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.hero__pulse {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+}
+
+.hero__pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--mint);
+  animation: pulseRing 2.4s var(--ease) infinite;
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  transition: color 0.4s var(--ease);
+}
+
+.hero__scroll:hover {
+  color: var(--text);
+}
+
+.hero__scroll-rail {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: var(--line-2);
+  overflow: hidden;
+}
+
+.hero__scroll-rail i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  animation: railSlide 2.6s var(--ease) infinite;
+}
+
+/* ---------------- 入场 ---------------- */
+
+.anim {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 1s var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes riseIn {
+  to {
+    transform: none;
+  }
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes auroraDrift {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 2%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-2%, 3%, 0) scale(1.02);
+  }
+}
+
+@keyframes bandScan {
+  0% {
+    transform: translateY(-40%);
+  }
+  100% {
+    transform: translateY(280%);
+  }
+}
+
+@keyframes pulseRing {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.7);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@keyframes railSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding-block: 120px 36px;
+  }
+
+  .hero__foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+}
